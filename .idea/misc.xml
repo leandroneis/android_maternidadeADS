@@ -3,6 +3,15 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Programacao/AndroidStudio Projects/maternidadeAds/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.19" />
+        <entry key="..\:/Programacao/AndroidStudio Projects/maternidadeAds/app/src/main/res/drawable/ic_launcher_background.xml" value="0.19" />
+        <entry key="..\:/Programacao/AndroidStudio Projects/maternidadeAds/app/src/main/res/layout/activity_main.xml" value="0.18177083333333333" />
+        <entry key="..\:/Programacao/AndroidStudio Projects/maternidadeAds/app/src/main/res/layout/fragment_menu.xml" value="0.18177083333333333" />
+        <entry key="..\:/Programacao/AndroidStudio Projects/maternidadeAds/app/src/main/res/layout/medico_fragment_adicionar.xml" value="0.3572916666666667" />
+        <entry key="..\:/Programacao/AndroidStudio Projects/maternidadeAds/app/src/main/res/layout/medico_fragment_editar.xml" value="0.3572916666666667" />
+        <entry key="..\:/Programacao/AndroidStudio Projects/maternidadeAds/app/src/main/res/layout/medico_fragment_main.xml" value="0.33" />
+        <entry key="..\:/Programacao/AndroidStudio Projects/maternidadeAds/app/src/main/res/layout/medico_item_list_view.xml" value="0.33" />
+        <entry key="..\:/Programacao/AndroidStudio Projects/maternidadeAds/app/src/main/res/menu/menu.xml" value="0.18177083333333333" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.19429347826086957" />
         <entry key="app/src/main/res/layout/fragment_medico_listar.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/fragment_menu.xml" value="0.35572916666666665" />
@@ -13,6 +22,7 @@
       </map>
     </option>
   </component>
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
