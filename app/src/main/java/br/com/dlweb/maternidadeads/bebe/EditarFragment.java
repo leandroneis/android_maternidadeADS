@@ -21,18 +21,18 @@ import br.com.dlweb.maternidadeads.database.DatabaseHelper;
 
 public class EditarFragment extends Fragment {
 
-    EditText etNome;
-    EditText etDataNascimento;
-    EditText etPeso;
-    EditText etAltura;
-    Spinner spMae;
-    Spinner spMedico;
-    ArrayList<Integer> listMaeId;
-    ArrayList<String> listMaeName;
-    ArrayList<Integer> listMedicoId;
-    ArrayList<String> listMedicoName;
-    DatabaseHelper databaseHelper;
-    Bebe b;
+    private EditText etNome;
+    private EditText etDataNascimento;
+    private EditText etPeso;
+    private EditText etAltura;
+    private Spinner spMae;
+    private Spinner spMedico;
+    private ArrayList<Integer> listMaeId;
+    private ArrayList<String> listMaeName;
+    private ArrayList<Integer> listMedicoId;
+    private ArrayList<String> listMedicoName;
+    private DatabaseHelper databaseHelper;
+    private Bebe b;
 
     public EditarFragment() { }
 
