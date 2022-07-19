@@ -1,7 +1,5 @@
 package br.com.dlweb.maternidadeads.mae;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -20,10 +18,8 @@ import br.com.dlweb.maternidadeads.database.DatabaseHelper;
 import br.com.dlweb.maternidadeads.webservice.DadosEndereco;
 import br.com.dlweb.maternidadeads.webservice.RetornarEnderecoPeloCep;
 
-public class EditarFragment extends Fragment {
+public class AdicionarFragment extends Fragment {
 
-    private DatabaseHelper databaseHelper;
-    private Mae m;
     private EditText etNome;
     private EditText etCep;
     private EditText etLogradouro;
@@ -35,7 +31,7 @@ public class EditarFragment extends Fragment {
     private EditText etComercial;
     private EditText etDataNascimento;
 
-    public EditarFragment() {
+    public AdicionarFragment() {
     }
 
     @Override
@@ -47,11 +43,7 @@ public class EditarFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.mae_fragment_editar, container, false);
-        Bundle b = getArguments();
-        int id_mae = b.getInt("id");
-        databaseHelper = new DatabaseHelper(getActivity());
-        m = databaseHelper.getByIdMae(id_mae);
+        View v = inflater.inflate(R.layout.mae_fragment_adicionar, container, false);
 
         etNome = v.findViewById(R.id.editTextNomeMae);
         etCep = v.findViewById(R.id.editTextCepMae);
@@ -64,73 +56,37 @@ public class EditarFragment extends Fragment {
         etComercial = v.findViewById(R.id.editTextComercialMae);
         etDataNascimento = v.findViewById(R.id.editTextDataNascimentoMae);
 
-        etNome.setText(m.getNome());
-        etCep.setText(m.getCep());
-        etLogradouro.setText(m.getLogradouro());
-        etNumero.setText(String.valueOf(m.getNumero()));
-        etBairro.setText(m.getBairro());
-        etCidade.setText(m.getCidade());
-        etFixo.setText(m.getFixo());
-        etCelular.setText(m.getCelular());
-        etComercial.setText(m.getComercial());
-        etDataNascimento.setText(m.getData_nascimento());
-
         etCep.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean hasFocus) {
                 if (!hasFocus) {
-                    if (m.getCep() != etCep.getText().toString()) {
-                        try {
-                            DadosEndereco dadosEndereco = new RetornarEnderecoPeloCep(etCep.getText().toString()).execute().get();
-                            etLogradouro.setText(dadosEndereco.getLogradouro());
-                            etBairro.setText(dadosEndereco.getBairro());
-                            etCidade.setText(dadosEndereco.getLocalidade());
-                        } catch (ExecutionException e) {
-                            e.printStackTrace();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
+                    try {
+                        DadosEndereco dadosEndereco = new RetornarEnderecoPeloCep(etCep.getText().toString()).execute().get();
+                        etLogradouro.setText(dadosEndereco.getLogradouro());
+                        etBairro.setText(dadosEndereco.getBairro());
+                        etCidade.setText(dadosEndereco.getLocalidade());
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
                 }
             }
         });
 
-        Button btnEditar = v.findViewById(R.id.buttonEditarMae);
+        Button btnAdicionar = v.findViewById(R.id.buttonAdicionarMae);
 
-        btnEditar.setOnClickListener(new View.OnClickListener() {
+        btnAdicionar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                editar(id_mae);
+                adicionar();
             }
         });
 
-        Button btnExcluir = v.findViewById(R.id.buttonExcluirMae);
-
-        btnExcluir.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle(R.string.dialog_excluir_mae);
-                builder.setPositiveButton(R.string.sim, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        excluir(id_mae);
-                    }
-                });
-                builder.setNegativeButton(R.string.nao, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        // Não faz nada
-                    }
-                });
-                AlertDialog alertDialog = builder.create();
-                alertDialog.show();
-            }
-        });
         return v;
     }
 
-    private void editar (int id) {
+    private void adicionar () {
         if (etNome.getText().toString().equals("")) {
             Toast.makeText(getActivity(), "Por favor, informe o nome!", Toast.LENGTH_LONG).show();
         } else if (etCep.getText().toString().equals("")) {
@@ -150,7 +106,6 @@ public class EditarFragment extends Fragment {
         } else {
             DatabaseHelper databaseHelper = new DatabaseHelper(getActivity());
             Mae m = new Mae();
-            m.setId(id);
             m.setNome(etNome.getText().toString());
             m.setLogradouro(etLogradouro.getText().toString());
             m.setCep(etCep.getText().toString());
@@ -161,17 +116,9 @@ public class EditarFragment extends Fragment {
             m.setCelular(etCelular.getText().toString());
             m.setComercial(etComercial.getText().toString());
             m.setData_nascimento(etDataNascimento.getText().toString());
-            databaseHelper.updateMae(m);
-            Toast.makeText(getActivity(), "Mãe atualizada!", Toast.LENGTH_LONG).show();
+            databaseHelper.createMae(m);
+            Toast.makeText(getActivity(), "Mãe salva!", Toast.LENGTH_LONG).show();
             getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameMae, new ListarFragment()).commit();
         }
-    }
-
-    private void excluir(int id) {
-        m = new Mae();
-        m.setId(id);
-        databaseHelper.deleteMae(m);
-        Toast.makeText(getActivity(), "Mãe excluída!", Toast.LENGTH_LONG).show();
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameMae, new ListarFragment()).commit();
     }
 }
