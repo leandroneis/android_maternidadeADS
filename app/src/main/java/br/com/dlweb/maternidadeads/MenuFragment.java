@@ -1,5 +1,6 @@
 package br.com.dlweb.maternidadeads;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -14,8 +15,8 @@ import android.widget.Toast;
 
 public class MenuFragment extends Fragment {
 
-    public MenuFragment() {}
-
+    public MenuFragment() {
+    }
 
 
     @Override
@@ -31,12 +32,13 @@ public class MenuFragment extends Fragment {
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu, menu);
     }
+
     @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        switch (item.getItemId()){
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
             case R.id.menu_mae:
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frame_main, new br.com.dlweb.maternidadeads.mae.MainFragment()).commit();
                 break;
@@ -45,6 +47,15 @@ public class MenuFragment extends Fragment {
                 break;
             case R.id.menu_bebe:
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frame_main, new br.com.dlweb.maternidadeads.bebe.MainFragment()).commit();
+                break;
+            case R.id.menu_compartilhar:
+                // Adroid Sharesheet
+                Intent content = new Intent();
+                content.setAction(Intent.ACTION_SEND);
+                content.putExtra(Intent.EXTRA_TEXT, "Mensagem de teste!");
+                content.setType("text/plain");
+                Intent share = Intent.createChooser(content, null);
+                startActivity(share);
                 break;
         }
         return super.onOptionsItemSelected(item);
